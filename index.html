@@ -636,6 +636,29 @@ html[data-skin=&quot;minimal&quot;] .est-desktop .est-cap{font-size:9.65px !impo
    only child. The same marker sits before &quot;Product Engine loop&quot;; left alone, since only
    this one was asked for. */
 html[data-skin=&quot;minimal&quot;] #approach .label-text &gt; svg{display:none;}
+/* Product Engine: the two body paragraphs stack to the left of the diagram.
+   They sit in `.loop-intro__body`, a sibling of `.loop-figure` only by way of their shared
+   `.loop-intro` wrapper - so that wrapper goes `display:contents` and its children become
+   grid items of the shell directly. The lead keeps the full width above; the paragraphs
+   take the left column, the diagram the right. `display:contents` drops the wrapper&#x27;s own
+   margin, so the lead carries it instead. Desktop only. */
+@media (min-width:768px){
+  html[data-skin=&quot;minimal&quot;] .section-shell:has(&gt; .loop-figure){
+    display:grid;grid-template-columns:minmax(0,0.78fr) minmax(0,1fr);
+    column-gap:56px;row-gap:40px;align-items:center;}
+  html[data-skin=&quot;minimal&quot;] .section-shell:has(&gt; .loop-figure) &gt; .keyline{grid-column:1/-1;}
+  html[data-skin=&quot;minimal&quot;] .loop-intro{display:contents;}
+  html[data-skin=&quot;minimal&quot;] .loop-intro__lead{grid-column:1/-1;margin-top:3rem;}
+  html[data-skin=&quot;minimal&quot;] .loop-intro__body{
+    grid-column:1;grid-row:3;display:grid;grid-template-columns:minmax(0,1fr);
+    row-gap:22px;margin-top:0;}
+  /* width:100% is doing real work. The svg is `width:100%`, so if its parent&#x27;s width is
+     indefinite the percentage cannot resolve and the svg falls back to the 300px default
+     for a replaced element - which is exactly what happened, the figure shrink-wrapping to
+     300 in a 777 column. Giving the grid item a definite width fixes the resolution. */
+  html[data-skin=&quot;minimal&quot;] .section-shell:has(&gt; .loop-figure) &gt; .loop-figure{
+    grid-column:2;grid-row:3;margin-top:0;width:100%;}
+}
 /* Title and body side by side, half the shell each. The site stacks them in a 768px box
    inside a 1440px shell; this lifts that cap and lays the box out as two columns, with the
    eyebrow on its own row above the title so the body&#x27;s first line sits level with the
@@ -695,10 +718,15 @@ html[data-skin=&quot;minimal&quot;] .plp-ring{
   stroke-width:1.3;vector-effect:non-scaling-stroke;}
 /* !important is required. The site writes these as `.plp-desktop[cid] .plp-head[cid]`,
    which is (0,4,0) and beats this rule&#x27;s (0,3,1) - so without it the sizes here are
-   simply ignored and the site&#x27;s 14/13px stand. Sized to the est figure&#x27;s own pair, which
-   render at 15.7 and 13.9: at this figure&#x27;s 1.2 scale that is 13.1 and 11.6 authored. */
-html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-head{font-size:13.1px !important;}
-html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-cap{font-size:11.6px !important;}
+   simply ignored and the site&#x27;s 14/13px stand.
+
+   Re-sized when the figure moved beside the body copy: at 778px rather than 1440 its unit
+   scale halved to 0.648, and the labels went with it to 8.5 and 7.5 rendered - correct in
+   proportion, unreadable in absolute terms. These land them at 12.5 and 11.0, which is
+   still proportionally smaller than the est figure&#x27;s 15.7 / 13.9 (as it should be, in a
+   figure half the width) but back above the floor for a label. */
+html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-head{font-size:19.3px !important;}
+html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-cap{font-size:17px !important;}
 html[data-skin=&quot;minimal&quot;] .plp-hub{fill:var(--color-bg);stroke:var(--color-fg);
   stroke-width:1.6;vector-effect:non-scaling-stroke;}
 html[data-skin=&quot;minimal&quot;] .plp-load-edge{stroke:var(--color-fg);stroke-width:1;
@@ -1453,6 +1481,29 @@ html[data-skin=&quot;minimal&quot;] .est-desktop .est-cap{font-size:9.65px !impo
    only child. The same marker sits before &quot;Product Engine loop&quot;; left alone, since only
    this one was asked for. */
 html[data-skin=&quot;minimal&quot;] #approach .label-text &gt; svg{display:none;}
+/* Product Engine: the two body paragraphs stack to the left of the diagram.
+   They sit in `.loop-intro__body`, a sibling of `.loop-figure` only by way of their shared
+   `.loop-intro` wrapper - so that wrapper goes `display:contents` and its children become
+   grid items of the shell directly. The lead keeps the full width above; the paragraphs
+   take the left column, the diagram the right. `display:contents` drops the wrapper&#x27;s own
+   margin, so the lead carries it instead. Desktop only. */
+@media (min-width:768px){
+  html[data-skin=&quot;minimal&quot;] .section-shell:has(&gt; .loop-figure){
+    display:grid;grid-template-columns:minmax(0,0.78fr) minmax(0,1fr);
+    column-gap:56px;row-gap:40px;align-items:center;}
+  html[data-skin=&quot;minimal&quot;] .section-shell:has(&gt; .loop-figure) &gt; .keyline{grid-column:1/-1;}
+  html[data-skin=&quot;minimal&quot;] .loop-intro{display:contents;}
+  html[data-skin=&quot;minimal&quot;] .loop-intro__lead{grid-column:1/-1;margin-top:3rem;}
+  html[data-skin=&quot;minimal&quot;] .loop-intro__body{
+    grid-column:1;grid-row:3;display:grid;grid-template-columns:minmax(0,1fr);
+    row-gap:22px;margin-top:0;}
+  /* width:100% is doing real work. The svg is `width:100%`, so if its parent&#x27;s width is
+     indefinite the percentage cannot resolve and the svg falls back to the 300px default
+     for a replaced element - which is exactly what happened, the figure shrink-wrapping to
+     300 in a 777 column. Giving the grid item a definite width fixes the resolution. */
+  html[data-skin=&quot;minimal&quot;] .section-shell:has(&gt; .loop-figure) &gt; .loop-figure{
+    grid-column:2;grid-row:3;margin-top:0;width:100%;}
+}
 /* Title and body side by side, half the shell each. The site stacks them in a 768px box
    inside a 1440px shell; this lifts that cap and lays the box out as two columns, with the
    eyebrow on its own row above the title so the body&#x27;s first line sits level with the
@@ -1512,10 +1563,15 @@ html[data-skin=&quot;minimal&quot;] .plp-ring{
   stroke-width:1.3;vector-effect:non-scaling-stroke;}
 /* !important is required. The site writes these as `.plp-desktop[cid] .plp-head[cid]`,
    which is (0,4,0) and beats this rule&#x27;s (0,3,1) - so without it the sizes here are
-   simply ignored and the site&#x27;s 14/13px stand. Sized to the est figure&#x27;s own pair, which
-   render at 15.7 and 13.9: at this figure&#x27;s 1.2 scale that is 13.1 and 11.6 authored. */
-html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-head{font-size:13.1px !important;}
-html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-cap{font-size:11.6px !important;}
+   simply ignored and the site&#x27;s 14/13px stand.
+
+   Re-sized when the figure moved beside the body copy: at 778px rather than 1440 its unit
+   scale halved to 0.648, and the labels went with it to 8.5 and 7.5 rendered - correct in
+   proportion, unreadable in absolute terms. These land them at 12.5 and 11.0, which is
+   still proportionally smaller than the est figure&#x27;s 15.7 / 13.9 (as it should be, in a
+   figure half the width) but back above the floor for a label. */
+html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-head{font-size:19.3px !important;}
+html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-cap{font-size:17px !important;}
 html[data-skin=&quot;minimal&quot;] .plp-hub{fill:var(--color-bg);stroke:var(--color-fg);
   stroke-width:1.6;vector-effect:non-scaling-stroke;}
 html[data-skin=&quot;minimal&quot;] .plp-load-edge{stroke:var(--color-fg);stroke-width:1;
@@ -2197,6 +2253,29 @@ html[data-skin=&quot;minimal&quot;] .est-desktop .est-cap{font-size:9.65px !impo
    only child. The same marker sits before &quot;Product Engine loop&quot;; left alone, since only
    this one was asked for. */
 html[data-skin=&quot;minimal&quot;] #approach .label-text &gt; svg{display:none;}
+/* Product Engine: the two body paragraphs stack to the left of the diagram.
+   They sit in `.loop-intro__body`, a sibling of `.loop-figure` only by way of their shared
+   `.loop-intro` wrapper - so that wrapper goes `display:contents` and its children become
+   grid items of the shell directly. The lead keeps the full width above; the paragraphs
+   take the left column, the diagram the right. `display:contents` drops the wrapper&#x27;s own
+   margin, so the lead carries it instead. Desktop only. */
+@media (min-width:768px){
+  html[data-skin=&quot;minimal&quot;] .section-shell:has(&gt; .loop-figure){
+    display:grid;grid-template-columns:minmax(0,0.78fr) minmax(0,1fr);
+    column-gap:56px;row-gap:40px;align-items:center;}
+  html[data-skin=&quot;minimal&quot;] .section-shell:has(&gt; .loop-figure) &gt; .keyline{grid-column:1/-1;}
+  html[data-skin=&quot;minimal&quot;] .loop-intro{display:contents;}
+  html[data-skin=&quot;minimal&quot;] .loop-intro__lead{grid-column:1/-1;margin-top:3rem;}
+  html[data-skin=&quot;minimal&quot;] .loop-intro__body{
+    grid-column:1;grid-row:3;display:grid;grid-template-columns:minmax(0,1fr);
+    row-gap:22px;margin-top:0;}
+  /* width:100% is doing real work. The svg is `width:100%`, so if its parent&#x27;s width is
+     indefinite the percentage cannot resolve and the svg falls back to the 300px default
+     for a replaced element - which is exactly what happened, the figure shrink-wrapping to
+     300 in a 777 column. Giving the grid item a definite width fixes the resolution. */
+  html[data-skin=&quot;minimal&quot;] .section-shell:has(&gt; .loop-figure) &gt; .loop-figure{
+    grid-column:2;grid-row:3;margin-top:0;width:100%;}
+}
 /* Title and body side by side, half the shell each. The site stacks them in a 768px box
    inside a 1440px shell; this lifts that cap and lays the box out as two columns, with the
    eyebrow on its own row above the title so the body&#x27;s first line sits level with the
@@ -2256,10 +2335,15 @@ html[data-skin=&quot;minimal&quot;] .plp-ring{
   stroke-width:1.3;vector-effect:non-scaling-stroke;}
 /* !important is required. The site writes these as `.plp-desktop[cid] .plp-head[cid]`,
    which is (0,4,0) and beats this rule&#x27;s (0,3,1) - so without it the sizes here are
-   simply ignored and the site&#x27;s 14/13px stand. Sized to the est figure&#x27;s own pair, which
-   render at 15.7 and 13.9: at this figure&#x27;s 1.2 scale that is 13.1 and 11.6 authored. */
-html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-head{font-size:13.1px !important;}
-html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-cap{font-size:11.6px !important;}
+   simply ignored and the site&#x27;s 14/13px stand.
+
+   Re-sized when the figure moved beside the body copy: at 778px rather than 1440 its unit
+   scale halved to 0.648, and the labels went with it to 8.5 and 7.5 rendered - correct in
+   proportion, unreadable in absolute terms. These land them at 12.5 and 11.0, which is
+   still proportionally smaller than the est figure&#x27;s 15.7 / 13.9 (as it should be, in a
+   figure half the width) but back above the floor for a label. */
+html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-head{font-size:19.3px !important;}
+html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-cap{font-size:17px !important;}
 html[data-skin=&quot;minimal&quot;] .plp-hub{fill:var(--color-bg);stroke:var(--color-fg);
   stroke-width:1.6;vector-effect:non-scaling-stroke;}
 html[data-skin=&quot;minimal&quot;] .plp-load-edge{stroke:var(--color-fg);stroke-width:1;
