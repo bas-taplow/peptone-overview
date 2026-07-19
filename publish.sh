@@ -1,16 +1,22 @@
 #!/bin/sh
-# Rebuild index.html from the private repo's overview.html, injecting the noindex
-# header. overview.html is generated output, so it never carries the tag itself -
+# Rebuild the published pages from the private repo's generated output, injecting the
+# noindex header. Those files are generated, so they never carry the tag themselves -
 # this is the only place it is added, and it must survive every refresh.
+#
+#   overview.html       -> index.html    the production page
+#   overview-fine.html  -> fine.html     the fine-line variant
 set -e
 cd "$(dirname "$0")"
 python3 - <<'PY'
-h = open("../overview.html", encoding="utf-8").read()
+PAGES = (("../overview.html", "index.html"),
+         ("../overview-fine.html", "fine.html"))
 tag = ('<meta name="robots" content="noindex,nofollow,noarchive">'
        '<meta name="googlebot" content="noindex,nofollow">')
-assert "<head>" in h, "unexpected shape - overview.html has no <head>"
-h = h.replace("<head>", "<head>" + tag, 1)
-open("index.html", "w", encoding="utf-8").write(h)
-print("index.html rebuilt with noindex")
+for src, dst in PAGES:
+    h = open(src, encoding="utf-8").read()
+    assert "<head>" in h, f"unexpected shape - {src} has no <head>"
+    assert "noindex" not in h, f"{src} already carries a robots tag"
+    open(dst, "w", encoding="utf-8").write(h.replace("<head>", "<head>" + tag, 1))
+    print(f"{dst} rebuilt from {src} with noindex")
 PY
-git add -A && git commit -m "Update overview" && git push
+git add -A && git commit -m "Update overview and fine-line variant" && git push
