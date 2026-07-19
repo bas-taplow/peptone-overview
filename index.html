@@ -636,6 +636,23 @@ html[data-skin=&quot;minimal&quot;] .est-desktop .est-cap{font-size:9.65px !impo
    only child. The same marker sits before &quot;Product Engine loop&quot;; left alone, since only
    this one was asked for. */
 html[data-skin=&quot;minimal&quot;] #approach .label-text &gt; svg{display:none;}
+/* Title and body side by side, half the shell each. The site stacks them in a 768px box
+   inside a 1440px shell; this lifts that cap and lays the box out as two columns, with the
+   eyebrow on its own row above the title so the body&#x27;s first line sits level with the
+   title rather than with the eyebrow. The paragraph keeps its own measure - it comes out
+   at 645 in a 688 column - because filling the column edge to edge would set it wider than
+   is comfortable to read. Desktop only; the stack is right on mobile. */
+@media (min-width:768px){
+  html[data-skin=&quot;minimal&quot;] #approach &gt; .section-shell &gt; .max-w-3xl{
+    max-width:none;display:grid;grid-template-columns:1fr 1fr;
+    column-gap:64px;align-items:start;}
+  html[data-skin=&quot;minimal&quot;] #approach &gt; .section-shell &gt; .max-w-3xl &gt; div{
+    grid-column:1;grid-row:1;}
+  html[data-skin=&quot;minimal&quot;] #approach &gt; .section-shell &gt; .max-w-3xl &gt; h2{
+    grid-column:1;grid-row:2;}
+  html[data-skin=&quot;minimal&quot;] #approach &gt; .section-shell &gt; .max-w-3xl &gt; p{
+    grid-column:2;grid-row:2;margin-top:0;}
+}
 /* every caption in the same ink; the accent tint is dropped */
 html[data-skin=&quot;minimal&quot;] .est-cap-accent{
   fill:color-mix(in srgb, var(--svg-stroke) 66%, transparent) !important;}
@@ -1436,6 +1453,23 @@ html[data-skin=&quot;minimal&quot;] .est-desktop .est-cap{font-size:9.65px !impo
    only child. The same marker sits before &quot;Product Engine loop&quot;; left alone, since only
    this one was asked for. */
 html[data-skin=&quot;minimal&quot;] #approach .label-text &gt; svg{display:none;}
+/* Title and body side by side, half the shell each. The site stacks them in a 768px box
+   inside a 1440px shell; this lifts that cap and lays the box out as two columns, with the
+   eyebrow on its own row above the title so the body&#x27;s first line sits level with the
+   title rather than with the eyebrow. The paragraph keeps its own measure - it comes out
+   at 645 in a 688 column - because filling the column edge to edge would set it wider than
+   is comfortable to read. Desktop only; the stack is right on mobile. */
+@media (min-width:768px){
+  html[data-skin=&quot;minimal&quot;] #approach &gt; .section-shell &gt; .max-w-3xl{
+    max-width:none;display:grid;grid-template-columns:1fr 1fr;
+    column-gap:64px;align-items:start;}
+  html[data-skin=&quot;minimal&quot;] #approach &gt; .section-shell &gt; .max-w-3xl &gt; div{
+    grid-column:1;grid-row:1;}
+  html[data-skin=&quot;minimal&quot;] #approach &gt; .section-shell &gt; .max-w-3xl &gt; h2{
+    grid-column:1;grid-row:2;}
+  html[data-skin=&quot;minimal&quot;] #approach &gt; .section-shell &gt; .max-w-3xl &gt; p{
+    grid-column:2;grid-row:2;margin-top:0;}
+}
 /* every caption in the same ink; the accent tint is dropped */
 html[data-skin=&quot;minimal&quot;] .est-cap-accent{
   fill:color-mix(in srgb, var(--svg-stroke) 66%, transparent) !important;}
@@ -2163,6 +2197,23 @@ html[data-skin=&quot;minimal&quot;] .est-desktop .est-cap{font-size:9.65px !impo
    only child. The same marker sits before &quot;Product Engine loop&quot;; left alone, since only
    this one was asked for. */
 html[data-skin=&quot;minimal&quot;] #approach .label-text &gt; svg{display:none;}
+/* Title and body side by side, half the shell each. The site stacks them in a 768px box
+   inside a 1440px shell; this lifts that cap and lays the box out as two columns, with the
+   eyebrow on its own row above the title so the body&#x27;s first line sits level with the
+   title rather than with the eyebrow. The paragraph keeps its own measure - it comes out
+   at 645 in a 688 column - because filling the column edge to edge would set it wider than
+   is comfortable to read. Desktop only; the stack is right on mobile. */
+@media (min-width:768px){
+  html[data-skin=&quot;minimal&quot;] #approach &gt; .section-shell &gt; .max-w-3xl{
+    max-width:none;display:grid;grid-template-columns:1fr 1fr;
+    column-gap:64px;align-items:start;}
+  html[data-skin=&quot;minimal&quot;] #approach &gt; .section-shell &gt; .max-w-3xl &gt; div{
+    grid-column:1;grid-row:1;}
+  html[data-skin=&quot;minimal&quot;] #approach &gt; .section-shell &gt; .max-w-3xl &gt; h2{
+    grid-column:1;grid-row:2;}
+  html[data-skin=&quot;minimal&quot;] #approach &gt; .section-shell &gt; .max-w-3xl &gt; p{
+    grid-column:2;grid-row:2;margin-top:0;}
+}
 /* every caption in the same ink; the accent tint is dropped */
 html[data-skin=&quot;minimal&quot;] .est-cap-accent{
   fill:color-mix(in srgb, var(--svg-stroke) 66%, transparent) !important;}
