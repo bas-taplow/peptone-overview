@@ -20,37 +20,10 @@
   body[data-view="minimal"] { background:#fff; }
   body[data-view="minimal"][data-theme="dark"] { background:#000; }
 
-  /* Sits at the top of the page and scrolls away with it - not sticky. The blur and the
-     translucent grounds below are what a sticky bar needed to stay legible over content;
-     they are harmless here and keep the bar reading as its own strip. */
-  .toggle-wrap { display:flex; justify-content:center;
-    padding:18px 0; backdrop-filter:blur(10px); }
-  body[data-view="original"] .toggle-wrap { background:rgba(0,0,0,.55); }
-  body[data-view="minimal"]  .toggle-wrap { background:rgba(255,255,255,.78); }
-  body[data-theme="dark"]    .toggle-wrap { background:rgba(0,0,0,.55); }
-  body[data-theme="dark"] .toggle { background:#111; }
-
-  .toggle { display:inline-flex; gap:4px; border-radius:999px; padding:4px;
-    border:1px solid rgba(128,128,140,.35); }
-  body[data-view="original"] .toggle { background:#111; }
-  body[data-view="minimal"] .toggle { background:#fff; }
-  .toggle button { appearance:none; border:0; background:transparent; cursor:pointer;
-    font-family:var(--font-sans); font-weight:500; font-size:13px; letter-spacing:.01em;
-    padding:9px 20px; border-radius:999px; color:#8a8a92; transition:all .18s ease; }
-  .toggle button.on { color:#fff; background:var(--accent); }
-  .toggle button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
-
   .sec { display:block; width:100%; border:0; background:transparent; }
 </style>
 </head>
-<body data-view="original">
-  <div class="toggle-wrap">
-    <div class="toggle" role="tablist" aria-label="Style">
-      <button data-v="original" class="on" onclick="setView('original')">Original</button>
-      <button data-v="minimal" onclick="setView('minimal')">Minimalist</button>
-    </div>
-  </div>
-
+<body data-view="minimal">
   <div class="stack">
     <iframe class="sec" scrolling="no" title="Peptone section 1" srcdoc="&lt;!doctype html&gt;&lt;html data-theme=&#x27;dark&#x27; data-skin=&#x27;original&#x27; data-sheet=&#x27;grid&#x27;&gt;&lt;head&gt;&lt;meta charset=&#x27;utf-8&#x27;&gt;&lt;style&gt;html,body{margin:0;}&lt;/style&gt;&lt;style&gt;html[data-nav=hidden] .site-header{background:color-mix(in srgb,var(--color-bg) 92%,transparent);border-color:var(--color-rule)}html[data-nav=hidden] .site-header .header-logo{opacity:1;pointer-events:auto;transform:none}.menu-button{display:none!important}.collab-hero-media__image,.collab-hero-media__img,.hero-intro-word,.keyline,.landing-bg,.landing-logo,.landing-tagline-logo,[data-reveal],[data-reveal] .reveal-item{opacity:1!important;transform:none!important}[data-hero-hidden]{opacity:1!important;transform:none!important;animation:none!important}[data-hero-jsonly]{display:none!important}
 .ca-mark[data-astro-cid-kg4h2f6k]{display:inline-flex}.ca-label[data-astro-cid-kg4h2f6k]{transition:color .28s var(--ease-linear-out)}:is(.circle-arrow[data-astro-cid-kg4h2f6k]:hover .ca-label[data-astro-cid-kg4h2f6k],.circle-arrow[data-astro-cid-kg4h2f6k]:focus-visible .ca-label[data-astro-cid-kg4h2f6k]){color:var(--color-accent-text)}.circle-arrow[data-astro-cid-kg4h2f6k]:focus-visible{outline:2px solid var(--color-accent);outline-offset:6px;border-radius:0}
@@ -2345,7 +2318,11 @@ html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-cap[x=&quot;928&quot;]{tra
     // variant only re-themes/re-skins them, so every shape, lockup, movement and
     // animation stays exactly as the original.
     var THEME = { original:'dark', minimal:'light' };
-    var current = 'original';
+    // The page shows the minimal skin only; the toggle is gone. setView() and the skin
+    // gating stay, because every injected figure is still written as "minimal overrides
+    // the site's own markup" - and because the exports still render Original to check
+    // that nothing has leaked into it.
+    var current = 'minimal';
     var themeLock = null;   // set by the dark-mode toggle inside a section
 
     // called from inside an iframe so one toggle flips every section at once
@@ -2397,6 +2374,7 @@ html[data-skin=&quot;minimal&quot;] .plp-desktop .plp-cap[x=&quot;928&quot;]{tra
       fr.addEventListener('load', function () { skin(fr); fit(fr); setTimeout(function(){fit(fr);}, 500); });
       skin(fr); fit(fr);
     });
+    setView('minimal');
     window.addEventListener('resize', function () {
       document.querySelectorAll('iframe.sec').forEach(fit);
     });
