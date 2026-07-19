@@ -162,16 +162,20 @@ html[data-skin=&quot;minimal&quot;] .vas-molsheet,html[data-skin=&quot;clean&quo
    unscoped (3 columns, gap clamp(28px,4vw,72px)) and a max-width:767px block replaces it
    with a single column and a much larger gap for the stacked layout - so this override is
    scoped to the desktop breakpoint, or it would crush that stacked spacing too. */
+/* The row fills the shell now. Two caps were holding it in: the figure&#x27;s own 1332
+   (= 3x420 + 2x36) and, underneath it, the site&#x27;s `max-width:420px` on
+   `.vision-act-media`. The 1332 existed only to absorb the slack that the 420 cap left
+   beside each panel once the 1fr columns grew past it - lift the media cap and the slack
+   cannot form, so the figure cap has nothing left to do. Media then fills its column and
+   the column is (shell - 2 gaps) / 3.
+
+   The gap is set through a custom property because the arrows below need to read it -
+   they are centred in it, and CSS cannot query `gap` back out. */
 @media (min-width:768px){
   html[data-skin=&quot;minimal&quot;] .vision-figure{
-    gap:clamp(14px,2vw,36px);
-    /* Halving the gap alone barely moved the *visible* space between panels. The acts
-       are capped at max-width:420px while the 1fr columns keep growing, so past ~1400px
-       each panel carries slack beside it that the gap rule never touched - at 1600px the
-       visible space was 32px of gap plus 39px of slack. Capping the row at 3 panels plus
-       2 gaps removes the slack, so the gap is the whole of the visible space and halving
-       it halves what you see. The row stays left-aligned. */
-    max-width:1332px;
+    --vis-gap:clamp(24px,3vw,48px);
+    gap:var(--vis-gap);
+    max-width:none;
   }
 }
 
@@ -329,6 +333,25 @@ html[data-skin=&quot;clean&quot;] .vas-ghost{stroke-width:1.55px;}
    largest scale that still fits the panel height inside the box. */
 html[data-skin=&quot;minimal&quot;] .vision-act-media,
 html[data-skin=&quot;clean&quot;] .vision-act-media{overflow:visible;margin-inline:0;}
+/* Lift the site&#x27;s 420px cap so the media fills its column - see the .vision-figure note. */
+@media (min-width:768px){
+  html[data-skin=&quot;minimal&quot;] .vision-act-media{max-width:none;position:relative;}
+  /* One arrow per join, centred in the gutter and on the media block&#x27;s own centre line -
+     which is the panels&#x27; centre line too: the act viewBox runs y=47..257 and the panels
+     y=90..215, so their midpoint lands at 50.2% of the box. Masked rather than set as a
+     glyph or an inline SVG, so one rule serves both themes: the mask carries the shape,
+     --color-fg the colour. */
+  html[data-skin=&quot;minimal&quot;] .vision-act:not(:last-child) .vision-act-media::after{
+    content:&quot;&quot;;position:absolute;top:50%;left:100%;
+    width:26px;height:14px;
+    margin-left:calc((var(--vis-gap) - 26px) / 2);
+    transform:translateY(-50%);
+    background-color:var(--color-fg);
+    -webkit-mask:url(&quot;data:image/svg+xml,%3Csvg%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20viewBox=&#x27;0%200%2026%2014&#x27;%3E%3Cpath%20d=&#x27;M1%207h20.4M17.2%202.4%2021.8%207l-4.6%204.6&#x27;%20fill=&#x27;none&#x27;%20stroke=&#x27;%23000&#x27;%20stroke-width=&#x27;1.6&#x27;%20stroke-linecap=&#x27;round&#x27;%20stroke-linejoin=&#x27;round&#x27;/%3E%3C/svg%3E&quot;) no-repeat center/contain;
+            mask:url(&quot;data:image/svg+xml,%3Csvg%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20viewBox=&#x27;0%200%2026%2014&#x27;%3E%3Cpath%20d=&#x27;M1%207h20.4M17.2%202.4%2021.8%207l-4.6%204.6&#x27;%20fill=&#x27;none&#x27;%20stroke=&#x27;%23000&#x27;%20stroke-width=&#x27;1.6&#x27;%20stroke-linecap=&#x27;round&#x27;%20stroke-linejoin=&#x27;round&#x27;/%3E%3C/svg%3E&quot;) no-repeat center/contain;
+    pointer-events:none;
+  }
+}
 html[data-skin=&quot;minimal&quot;] .vision-act-svg,
 html[data-skin=&quot;clean&quot;] .vision-act-svg{transform:scale(1.287);transform-origin:90.6% 50%;}
 /* the sheet carries its own title now, so drop the original side label */
@@ -845,16 +868,20 @@ html[data-skin=&quot;minimal&quot;] .vas-molsheet,html[data-skin=&quot;clean&quo
    unscoped (3 columns, gap clamp(28px,4vw,72px)) and a max-width:767px block replaces it
    with a single column and a much larger gap for the stacked layout - so this override is
    scoped to the desktop breakpoint, or it would crush that stacked spacing too. */
+/* The row fills the shell now. Two caps were holding it in: the figure&#x27;s own 1332
+   (= 3x420 + 2x36) and, underneath it, the site&#x27;s `max-width:420px` on
+   `.vision-act-media`. The 1332 existed only to absorb the slack that the 420 cap left
+   beside each panel once the 1fr columns grew past it - lift the media cap and the slack
+   cannot form, so the figure cap has nothing left to do. Media then fills its column and
+   the column is (shell - 2 gaps) / 3.
+
+   The gap is set through a custom property because the arrows below need to read it -
+   they are centred in it, and CSS cannot query `gap` back out. */
 @media (min-width:768px){
   html[data-skin=&quot;minimal&quot;] .vision-figure{
-    gap:clamp(14px,2vw,36px);
-    /* Halving the gap alone barely moved the *visible* space between panels. The acts
-       are capped at max-width:420px while the 1fr columns keep growing, so past ~1400px
-       each panel carries slack beside it that the gap rule never touched - at 1600px the
-       visible space was 32px of gap plus 39px of slack. Capping the row at 3 panels plus
-       2 gaps removes the slack, so the gap is the whole of the visible space and halving
-       it halves what you see. The row stays left-aligned. */
-    max-width:1332px;
+    --vis-gap:clamp(24px,3vw,48px);
+    gap:var(--vis-gap);
+    max-width:none;
   }
 }
 
@@ -1012,6 +1039,25 @@ html[data-skin=&quot;clean&quot;] .vas-ghost{stroke-width:1.55px;}
    largest scale that still fits the panel height inside the box. */
 html[data-skin=&quot;minimal&quot;] .vision-act-media,
 html[data-skin=&quot;clean&quot;] .vision-act-media{overflow:visible;margin-inline:0;}
+/* Lift the site&#x27;s 420px cap so the media fills its column - see the .vision-figure note. */
+@media (min-width:768px){
+  html[data-skin=&quot;minimal&quot;] .vision-act-media{max-width:none;position:relative;}
+  /* One arrow per join, centred in the gutter and on the media block&#x27;s own centre line -
+     which is the panels&#x27; centre line too: the act viewBox runs y=47..257 and the panels
+     y=90..215, so their midpoint lands at 50.2% of the box. Masked rather than set as a
+     glyph or an inline SVG, so one rule serves both themes: the mask carries the shape,
+     --color-fg the colour. */
+  html[data-skin=&quot;minimal&quot;] .vision-act:not(:last-child) .vision-act-media::after{
+    content:&quot;&quot;;position:absolute;top:50%;left:100%;
+    width:26px;height:14px;
+    margin-left:calc((var(--vis-gap) - 26px) / 2);
+    transform:translateY(-50%);
+    background-color:var(--color-fg);
+    -webkit-mask:url(&quot;data:image/svg+xml,%3Csvg%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20viewBox=&#x27;0%200%2026%2014&#x27;%3E%3Cpath%20d=&#x27;M1%207h20.4M17.2%202.4%2021.8%207l-4.6%204.6&#x27;%20fill=&#x27;none&#x27;%20stroke=&#x27;%23000&#x27;%20stroke-width=&#x27;1.6&#x27;%20stroke-linecap=&#x27;round&#x27;%20stroke-linejoin=&#x27;round&#x27;/%3E%3C/svg%3E&quot;) no-repeat center/contain;
+            mask:url(&quot;data:image/svg+xml,%3Csvg%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20viewBox=&#x27;0%200%2026%2014&#x27;%3E%3Cpath%20d=&#x27;M1%207h20.4M17.2%202.4%2021.8%207l-4.6%204.6&#x27;%20fill=&#x27;none&#x27;%20stroke=&#x27;%23000&#x27;%20stroke-width=&#x27;1.6&#x27;%20stroke-linecap=&#x27;round&#x27;%20stroke-linejoin=&#x27;round&#x27;/%3E%3C/svg%3E&quot;) no-repeat center/contain;
+    pointer-events:none;
+  }
+}
 html[data-skin=&quot;minimal&quot;] .vision-act-svg,
 html[data-skin=&quot;clean&quot;] .vision-act-svg{transform:scale(1.287);transform-origin:90.6% 50%;}
 /* the sheet carries its own title now, so drop the original side label */
@@ -1455,16 +1501,20 @@ html[data-skin=&quot;minimal&quot;] .vas-molsheet,html[data-skin=&quot;clean&quo
    unscoped (3 columns, gap clamp(28px,4vw,72px)) and a max-width:767px block replaces it
    with a single column and a much larger gap for the stacked layout - so this override is
    scoped to the desktop breakpoint, or it would crush that stacked spacing too. */
+/* The row fills the shell now. Two caps were holding it in: the figure&#x27;s own 1332
+   (= 3x420 + 2x36) and, underneath it, the site&#x27;s `max-width:420px` on
+   `.vision-act-media`. The 1332 existed only to absorb the slack that the 420 cap left
+   beside each panel once the 1fr columns grew past it - lift the media cap and the slack
+   cannot form, so the figure cap has nothing left to do. Media then fills its column and
+   the column is (shell - 2 gaps) / 3.
+
+   The gap is set through a custom property because the arrows below need to read it -
+   they are centred in it, and CSS cannot query `gap` back out. */
 @media (min-width:768px){
   html[data-skin=&quot;minimal&quot;] .vision-figure{
-    gap:clamp(14px,2vw,36px);
-    /* Halving the gap alone barely moved the *visible* space between panels. The acts
-       are capped at max-width:420px while the 1fr columns keep growing, so past ~1400px
-       each panel carries slack beside it that the gap rule never touched - at 1600px the
-       visible space was 32px of gap plus 39px of slack. Capping the row at 3 panels plus
-       2 gaps removes the slack, so the gap is the whole of the visible space and halving
-       it halves what you see. The row stays left-aligned. */
-    max-width:1332px;
+    --vis-gap:clamp(24px,3vw,48px);
+    gap:var(--vis-gap);
+    max-width:none;
   }
 }
 
@@ -1622,6 +1672,25 @@ html[data-skin=&quot;clean&quot;] .vas-ghost{stroke-width:1.55px;}
    largest scale that still fits the panel height inside the box. */
 html[data-skin=&quot;minimal&quot;] .vision-act-media,
 html[data-skin=&quot;clean&quot;] .vision-act-media{overflow:visible;margin-inline:0;}
+/* Lift the site&#x27;s 420px cap so the media fills its column - see the .vision-figure note. */
+@media (min-width:768px){
+  html[data-skin=&quot;minimal&quot;] .vision-act-media{max-width:none;position:relative;}
+  /* One arrow per join, centred in the gutter and on the media block&#x27;s own centre line -
+     which is the panels&#x27; centre line too: the act viewBox runs y=47..257 and the panels
+     y=90..215, so their midpoint lands at 50.2% of the box. Masked rather than set as a
+     glyph or an inline SVG, so one rule serves both themes: the mask carries the shape,
+     --color-fg the colour. */
+  html[data-skin=&quot;minimal&quot;] .vision-act:not(:last-child) .vision-act-media::after{
+    content:&quot;&quot;;position:absolute;top:50%;left:100%;
+    width:26px;height:14px;
+    margin-left:calc((var(--vis-gap) - 26px) / 2);
+    transform:translateY(-50%);
+    background-color:var(--color-fg);
+    -webkit-mask:url(&quot;data:image/svg+xml,%3Csvg%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20viewBox=&#x27;0%200%2026%2014&#x27;%3E%3Cpath%20d=&#x27;M1%207h20.4M17.2%202.4%2021.8%207l-4.6%204.6&#x27;%20fill=&#x27;none&#x27;%20stroke=&#x27;%23000&#x27;%20stroke-width=&#x27;1.6&#x27;%20stroke-linecap=&#x27;round&#x27;%20stroke-linejoin=&#x27;round&#x27;/%3E%3C/svg%3E&quot;) no-repeat center/contain;
+            mask:url(&quot;data:image/svg+xml,%3Csvg%20xmlns=&#x27;http://www.w3.org/2000/svg&#x27;%20viewBox=&#x27;0%200%2026%2014&#x27;%3E%3Cpath%20d=&#x27;M1%207h20.4M17.2%202.4%2021.8%207l-4.6%204.6&#x27;%20fill=&#x27;none&#x27;%20stroke=&#x27;%23000&#x27;%20stroke-width=&#x27;1.6&#x27;%20stroke-linecap=&#x27;round&#x27;%20stroke-linejoin=&#x27;round&#x27;/%3E%3C/svg%3E&quot;) no-repeat center/contain;
+    pointer-events:none;
+  }
+}
 html[data-skin=&quot;minimal&quot;] .vision-act-svg,
 html[data-skin=&quot;clean&quot;] .vision-act-svg{transform:scale(1.287);transform-origin:90.6% 50%;}
 /* the sheet carries its own title now, so drop the original side label */
